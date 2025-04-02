@@ -15,8 +15,21 @@ public class StudentController {
         this.studentService = studentService;
     }
 
+    // Fetch all students
     @GetMapping
     public List<Student> getAllStudents() {
         return studentService.getAllStudents();
+    }
+
+    // Get the top student in a particular state
+    @GetMapping("/top/{state}")
+    public Student getTopStudentInState(@PathVariable String state) {
+        return studentService.getTopPercentStudentInState(state);
+    }
+
+    // Get the topper across all states
+    @GetMapping("/topper")
+    public Student getTopperInAllStates() {
+        return studentService.getTopperInAllStates();
     }
 }

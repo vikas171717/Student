@@ -2,8 +2,9 @@ package com.asmadiya.student.repository;
 
 import com.asmadiya.student.entity.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import java.util.List;
 
-@Repository
 public interface StudentRepository extends JpaRepository<Student, Long> {
+    // Custom method to find students by state
+    List<Student> findByState(String state);
 }
