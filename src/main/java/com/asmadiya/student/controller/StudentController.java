@@ -1,7 +1,7 @@
 package com.asmadiya.student.controller;
 
 import com.asmadiya.student.entity.Student;
-import com.asmadiya.student.service.StudentService;
+import com.asmadiya.student.service.StudentServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,9 +9,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/students")
 public class StudentController {
-    private final StudentService studentService;
+    private final StudentServiceImpl studentService;
 
-    public StudentController(StudentService studentService) {
+    public StudentController(StudentServiceImpl studentService) {
         this.studentService = studentService;
     }
 

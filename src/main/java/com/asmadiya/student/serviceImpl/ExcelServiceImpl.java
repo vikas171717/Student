@@ -7,31 +7,32 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 @Service
-public class ExcelService {
+public class ExcelServiceImpl implements ExcelService {
 
     private final StudentRepository studentRepository;
 
-    public ExcelService(StudentRepository studentRepository) {
+    public ExcelServiceImpl(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
 
-    public void importStudentsFromExcel(MultipartFile file) throws Exception {
+    @Override
+    public void importStudentsFromExcel(MultipartFile file) throws IOException {
         List<Student> students = parseExcelFile(file.getInputStream());
         studentRepository.saveAll(students);
     }
 
-    private List<Student> parseExcelFile(InputStream inputStream) throws Exception {
+    @Override
+    public List<Student> parseExcelFile(InputStream inputStream) throws IOException {
         List<Student> studentList = new ArrayList<>();
-        Workbook workbook = null;
 
-        try {
-            workbook = new XSSFWorkbook(inputStream);
+        try (Workbook workbook = new XSSFWorkbook(inputStream)) {
             Sheet sheet = workbook.getSheetAt(0);
             Iterator<Row> rows = sheet.iterator();
 
@@ -49,10 +50,6 @@ public class ExcelService {
                 student.setYop((int) getNumericCellValue(row.getCell(4)));
 
                 studentList.add(student);
-            }
-        } finally {
-            if (workbook != null) {
-                workbook.close();
             }
         }
         return studentList;

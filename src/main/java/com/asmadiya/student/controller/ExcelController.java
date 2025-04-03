@@ -1,6 +1,6 @@
 package com.asmadiya.student.controller;
 
-import com.asmadiya.student.service.ExcelService;
+import com.asmadiya.student.service.ExcelServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,9 +10,9 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/api/excel")
 public class ExcelController {
 
-    private final ExcelService excelService;
+    private final ExcelServiceImpl excelService;
 
-    public ExcelController(ExcelService excelService) {
+    public ExcelController(ExcelServiceImpl excelService) {
         this.excelService = excelService;
     }
 
