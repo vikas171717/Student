@@ -43,7 +43,7 @@ public class StudentServiceImpl implements StudentService{
     public Student getTopperInAllStates() {
         List<Student> allStudents = studentRepository.findAll();
         if (allStudents.isEmpty()) {
-            return null; // or throw exception if you want
+            return null; 
         }
 
         // Find the student with the highest percentage across all states
