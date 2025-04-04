@@ -28,8 +28,7 @@ public class JWTProvider {
                 .claim("role", role.toUpperCase()) // Add role as a claim
                 .setIssuedAt(new Date()) // Set the issue date
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60)) // Set the expiration (1 hour)
-                .signWith(SignatureAlgorithm.HS512, secretKey.getBytes(StandardCharsets.UTF_8)) // Sign the token with
-                                                                                                // your secret key
+                .signWith(SignatureAlgorithm.HS512, secretKey.getBytes(StandardCharsets.UTF_8)) // Sign the token with your secret key
                 .compact(); // Return the compacted JWT token
     }
 
