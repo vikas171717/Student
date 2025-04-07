@@ -11,9 +11,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.http.HttpMethod;
-
-
 import com.asmadiya.student.config.JwtAuthenticationFilter;
 
 @Configuration // Marks this class as a configuration class
@@ -39,6 +36,14 @@ public class SecurityConfig {
                 // Configures authorization rules for different API endpoints
                 .authorizeHttpRequests(authz -> authz
                         // Publicly accessible endpoints
+                        .requestMatchers("api/**")
+                        .permitAll()
+
+                        //Product
+                        .requestMatchers("/api/products","/api/products/**","/api/products/search","/api/products/add","/api/products/**")
+                        .permitAll()
+
+                        // comments
                         .requestMatchers("api/comments","api/comments/**")
                         .permitAll()
                         .requestMatchers("/api/product","/api/external-login")

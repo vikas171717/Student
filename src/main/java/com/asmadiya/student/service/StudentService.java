@@ -1,8 +1,6 @@
 package com.asmadiya.student.service;
 
 import java.util.List;
-import java.util.Optional;
-
 import com.asmadiya.student.entity.Student;
 
 public interface StudentService {
