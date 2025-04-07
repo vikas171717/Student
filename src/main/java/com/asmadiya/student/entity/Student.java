@@ -8,12 +8,12 @@ public class Student {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long srno;
+    private Long srno; // Serial Number (Primary Key)
 
-    private String name;  // 🔹 Add this missing field
+    private String name;
     private String state;
     private double percentage;
-    private int yop;
+    private int yop; // Year of Passing
 
     public Student() {
     }
@@ -33,7 +33,7 @@ public class Student {
         this.srno = srno;
     }
 
-    public String getName() {  // 🔹 Now this method will work
+    public String getName() {
         return name;
     }
 
