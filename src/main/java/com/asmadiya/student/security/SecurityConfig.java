@@ -11,6 +11,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.http.HttpMethod;
+
 
 import com.asmadiya.student.config.JwtAuthenticationFilter;
 
@@ -37,6 +39,10 @@ public class SecurityConfig {
                 // Configures authorization rules for different API endpoints
                 .authorizeHttpRequests(authz -> authz
                         // Publicly accessible endpoints
+                        .requestMatchers("api/comments","api/comments/**")
+                        .permitAll()
+                        .requestMatchers("/api/product","/api/external-login")
+                        .permitAll()
                         .requestMatchers("/api/user/register",
                         "/api/user/signin","/error")
                         .permitAll()
@@ -64,9 +70,9 @@ public class SecurityConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("*") // Allows requests from all origins
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Allows specified HTTP methods
-                        .allowedHeaders("*"); // Allows all headers
+                        .allowedOrigins("*") 
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedHeaders("*");
             }
         };
     }
