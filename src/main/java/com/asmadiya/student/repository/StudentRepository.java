@@ -6,5 +6,7 @@ import java.util.List;
 
 public interface StudentRepository extends JpaRepository<Student, Long> {
     // Custom method to find students by state
+
+    
     List<Student> findByState(String state);
 }
