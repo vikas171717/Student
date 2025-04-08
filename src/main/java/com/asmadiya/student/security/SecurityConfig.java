@@ -30,16 +30,17 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(authz -> authz
+            .requestMatchers("/proxy/user/login").permitAll()
+                .requestMatchers("/proxy/user/**").permitAll()
                 .requestMatchers("/proxy/**").permitAll()
                 .requestMatchers("/error").permitAll()
-                .requestMatchers("/proxy/**", "/error").permitAll()
 
                 .requestMatchers("/api/student/top/{state}", "/api/student/topper")
-                    .hasAnyRole("FACULTY", "STUDENT", "ADMIN")
+                .hasAnyRole("FACULTY", "STUDENT", "ADMIN")
                 .requestMatchers("/api/student/get-all-students")
-                    .hasAnyRole("PRINCIPAL", "FACULTY", "ADMIN")
+                .hasAnyRole("PRINCIPAL", "FACULTY", "ADMIN")
                 .requestMatchers("/api/excel/upload")
-                    .hasAnyRole("ADMIN", "FACULTY")
+                .hasAnyRole("ADMIN", "FACULTY")
                 .anyRequest().authenticated()
             )
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

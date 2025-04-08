@@ -3,6 +3,8 @@ package com.asmadiya.student.controller;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,10 +26,12 @@ public class DummyJsonProxyController {
         this.proxyService = proxyService;
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/**")
     public ResponseEntity<String> getData(HttpServletRequest request) {
+        String token = extractToken(request);
         String endpoint = extractEndpoint(request);
-        return ResponseEntity.ok(proxyService.fetchData(endpoint));
+        return ResponseEntity.ok(proxyService.fetchDataWithAuth(endpoint, token));
     }
 
     @PostMapping("/**")
@@ -37,12 +41,22 @@ public class DummyJsonProxyController {
         return ResponseEntity.ok(proxyService.postData(endpoint, body));
     }
 
+    @PreAuthorize("isAuthenticated()")
     @DeleteMapping("/**")
     public ResponseEntity<String> deleteData(HttpServletRequest request) {
+        String token = extractToken(request);
         String endpoint = extractEndpoint(request);
-        return ResponseEntity.ok(proxyService.deleteData(endpoint));
+        return ResponseEntity.ok(proxyService.deleteDataWithAuth(endpoint, token));
     }
 
+    private String extractToken(HttpServletRequest request) {
+        String bearerToken = request.getHeader("Authorization");
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring(7);  
+        }
+        return null;
+    }
+    
     private String extractEndpoint(HttpServletRequest request) {
         return request.getRequestURI().substring("/proxy/".length());
     }
