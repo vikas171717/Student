@@ -31,10 +31,13 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(authz -> authz
             .requestMatchers("/proxy/user/login").permitAll()
-                .requestMatchers("/proxy/user/**").permitAll()
+                .requestMatchers("/proxy/user/**").authenticated()
                 .requestMatchers("/proxy/**").permitAll()
                 .requestMatchers("/error").permitAll()
 
+                .requestMatchers("/api/user/register",
+                        "/api/user/signin","/error")
+                        .permitAll()
                 .requestMatchers("/api/student/top/{state}", "/api/student/topper")
                 .hasAnyRole("FACULTY", "STUDENT", "ADMIN")
                 .requestMatchers("/api/student/get-all-students")
